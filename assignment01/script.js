@@ -1,77 +1,76 @@
-const eventForm = document.getElementById("eventForm");
-const eventTitle = document.getElementById("eventTitle");
-const eventDate = document.getElementById("eventDate");
-const eventCategory = document.getElementById("eventCategory");
-const eventDescription = document.getElementById("eventDescription");
-const clearAllBtn = document.getElementById("clearAllBtn");
-const addSampleBtn = document.getElementById("addSampleBtn");
-const eventContainer = document.getElementById("eventContainer");
+const addBtn = document.getElementById("addEvent");
+const eventList = document.getElementById("eventList");
+const clearBtn = document.getElementById("clearAll");
+const sampleBtn = document.getElementById("sample");
 
-let sampleEvent = [
-    {
-        title: "Web Dev",
-        date: "2026-05-04",
-        category: "workshop",
-        description: "Web development workshop"
-    }, 
-    {
-        title: "Tech Conference",
-        date: "2026-07-04",
-        category: "conference",
-        description: "Tech performance and networking"
+// Add Event
+addBtn.addEventListener("click", () => {
+
+    const title = document.getElementById("title").value;
+    const date = document.getElementById("date").value;
+    const category = document.getElementById("category").value;
+    const desc = document.getElementById("desc").value;
+
+    if (!title || !date) {
+        alert("Please fill title and date");
+        return;
     }
-];
 
-function createEventCard(eventData) {
+    addEventCard(title, date, category, desc);
+
+    eventList.querySelector(".empty")?.remove();
+});
+
+// Create Event Card
+function addEventCard(title, date, category, desc) {
+
     const card = document.createElement("div");
-    card.className = "event-card"; 
+    card.classList.add("event-item");
+
     card.innerHTML = `
-        <button class="delete-btn">X</button>
-        <h3>${eventData.title}</h3>
-        <div>${eventData.date}</div>
-        <span>${eventData.category}</span>
-        <p>${eventData.description}</p>
+        <h4>${title}</h4>
+        <p><b>Date:</b> ${date}</p>
+        <p><b>Category:</b> ${category}</p>
+        <p>${desc}</p>
+        <button class="delete">Delete</button>
+        <button class="highlight">Highlight</button>
     `;
-    return card;
+
+    eventList.appendChild(card);
 }
 
-function addEvent(eventData) {
-    const emptyState = document.getElementById("empty-state"); 
-    if (emptyState) {
-        emptyState.remove();
-    }
-        
-    eventContainer.appendChild(createEventCard(eventData));    
-}
+// Event Delegation
+eventList.addEventListener("click", (e) => {
 
-eventForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const eventData = {
-        title: eventTitle.value,
-        date: eventDate.value,
-        category: eventCategory.value,
-        description: eventDescription.value
-    };
-    addEvent(eventData);
-    eventForm.reset();    
-});
-
-eventContainer.addEventListener("click", (event) => {
-    const card = event.target.closest(".event-card");
-
-    if (event.target.classList.contains("delete-btn")) {
-        card.remove();
+    if (e.target.classList.contains("delete")) {
+        e.target.parentElement.remove();
     }
 
-    if (!eventContainer.querySelector(".event-card")) {
-        eventContainer.innerHTML = `<div id="empty-state">No events yet. Add your first event!</div>`;
+    if (e.target.classList.contains("highlight")) {
+        e.target.parentElement.style.background = "#ffeaa7";
     }
 });
 
-addSampleBtn.addEventListener("click", () => {
-    sampleEvent.forEach(item => addEvent(item));
+// Clear All Events
+clearBtn.addEventListener("click", () => {
+    eventList.innerHTML = `<p class="empty">No events yet. Add your first event!</p>`;
 });
 
-clearAllBtn.addEventListener("click", () => {
-    eventContainer.innerHTML = `<div id="empty-state">No events yet. Add your first event!</div>`;
+// Add Sample Events
+sampleBtn.addEventListener("click", () => {
+    addEventCard("Tech Conference", "2026-03-15", "Conference", "AI & ML Conference");
+    addEventCard("Team Meeting", "2026-02-20", "Meeting", "Project Discussion");
+});
+
+// ---------------- DOM DEMO ----------------
+
+const demo = document.getElementById("demoText");
+
+document.getElementById("htmlOut").innerHTML = demo.innerHTML;
+document.getElementById("textOut").innerText = demo.innerText;
+document.getElementById("contentOut").textContent = demo.textContent;
+
+// Key Press Demo
+document.addEventListener("keydown", (e) => {
+    document.getElementById("keyPress").textContent = e.key;
 });
