@@ -2,73 +2,79 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Smart Event Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="dashboard-container">
+        <h1>Smart Event Dashboard</h1>
 
-<header>
-    🎯 Smart Event Dashboard
-</header>
+        <div class="top-row">
+            <div class="card add-event">
+    
 
-<div class="dashboard">
+                <h2>Add New Event</h2>
+                <form id="eventForm">
+                    <div>
+                        <label for="title">Event Title: </label><br>
+                        <input type="text" id="eventTitle">
+                        <br><br>
+                    </div>    
 
-   
-    <div class="card form-card">
-        <h3>Add New Event</h3>
+                    <div>
+                        <label for="date">Event Date: </label><br>
+                        <input type="date" id="eventDate">
+                        <br><br>
+                    </div>
 
-        <label>Event Title</label>
-        <input type="text" id="title">
+                    <div>
+                        <label for="category">Categery: </label><br>
+                        <select name="category" id="eventCategory">
+                            <option value="conference">conference</option>
+                            <option value="workshop">workshop</option>
+                            <option value="webinar">webinar</option>
+                            <option value="social">social</option>
+                            <option value="meetup">meetup</option>
+                        </select>
+                        <br><br>
+                    </div>
 
-        <label>Event Date</label>
-        <input type="date" id="date">
+                    <div>
+                        <label for="description">Description: </label><br>
+                        <textarea name="" id="eventDescription"></textarea>
+                        <br><br>
+                    </div>
 
-        <label>Category</label>
-        <select id="category">
-            <option>Conference</option>
-            <option>Workshop</option>
-            <option>Meeting</option>
-        </select>
+                    <div>
+                        <button type="submit">Add Event</button>
+                    </div>
+            
 
-        <label>Description</label>
-        <textarea id="desc"></textarea>
-
-        <button id="addEvent">Add Event</button>
-    </div>
-
-
-    <div class="card events-card">
-        <div class="event-header">
-            <h3>My Events</h3>
-            <div>
-                <button id="clearAll">Clear All Events</button>
-                <button id="sample">Add Sample Events</button>
+                </form>
+        
+            </div>
+            <div class="card my-events">
+                <div class="header-split">
+                    <h2>My Events</h2>
+                    <div class="button-group">
+                        <button id="clearAllBtn">Clear All Events</button>
+                        <button id="addSampleBtn">Add Sample Events</button>
+                    </div>
+                </div>
+                <div id="eventContainer">
+                    <div>No events yet. Add your first event!</div>
+                </div>
             </div>
         </div>
-
-        <div id="eventList" class="event-list">
-            <p class="empty">No events yet. Add your first event!</p>
-        </div>
     </div>
+    <div class="card_dom-demo">
+        <h2>DOM Manipulation Demo</h2>
+        <div>
+            <div id="demoContent" class="demo-content">press any key to see the difference</div>
+        </div>
+    </div>    
 
-</div>
-
-
-<div class="card demo-card">
-    <h3>DOM Manipulation Demo</h3>
-    <p><b>innerText vs innerHTML vs textContent</b></p>
-
-    <p id="demoText">
-        <b>Original HTML:</b> &lt;strong&gt;Bold Text&lt;/strong&gt; with spaces
-    </p>
-
-    <p><b>innerHTML:</b> <span id="htmlOut"></span></p>
-    <p><b>innerText:</b> <span id="textOut"></span></p>
-    <p><b>textContent:</b> <span id="contentOut"></span></p>
-
-    <p>You pressed: <span id="keyPress">None</span></p>
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
