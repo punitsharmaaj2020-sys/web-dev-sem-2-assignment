@@ -6,25 +6,28 @@ const eventDescription = document.getElementById("eventDescription");
 const clearAllBtn = document.getElementById("clearAllBtn");
 const addSampleBtn = document.getElementById("addSampleBtn");
 const eventContainer = document.getElementById("eventContainer");
-
-let sampleEvent = [
+const demoContent = document.getElementById("demoContent");
+let sampleEvents = [    
     {
-        title: "Web Dev",
-        date: "2026-05-04",
-        category: "workshop",
-        description: "Web development workshop"
-    }, 
+        title: "Web Dev Workshop",
+        date: "2026-06-04",
+        category: "Workshop",
+        description: "Learn JavaScript with hands-on practice."
+    },
     {
         title: "Tech Conference",
-        date: "2026-07-04",
-        category: "conference",
-        description: "Tech performance and networking"
+        date: "2026-07-10",
+        category: "Conference",
+        description: "Annual technology networking event."
     }
 ];
 
+
 function createEventCard(eventData) {
+
     const card = document.createElement("div");
-    card.className = "event-card"; 
+    card.classList.add("event-card");
+
     card.innerHTML = `
         <button class="delete-btn">X</button>
         <h3>${eventData.title}</h3>
@@ -32,46 +35,75 @@ function createEventCard(eventData) {
         <span>${eventData.category}</span>
         <p>${eventData.description}</p>
     `;
+
+    // Delete button functionality
+    const deleteBtn = card.querySelector(".delete-btn");
+    deleteBtn.addEventListener("click", function () {
+        card.remove();
+        checkEmptyState();
+    });
+
     return card;
 }
 
+
+
 function addEvent(eventData) {
-    const emptyState = document.getElementById("empty-state"); 
-    if (emptyState) {
-        emptyState.remove();
-    }
-        
-    eventContainer.appendChild(createEventCard(eventData));    
+
+    // If empty state is present then remove it
+    const emptyState = document.querySelector(".empty-state");
+    if (emptyState) emptyState.remove();
+
+    eventContainer.appendChild(createEventCard(eventData));
 }
 
-eventForm.addEventListener("submit", (event) => {
+
+
+
+function checkEmptyState() {
+    if (eventContainer.children.length === 0) {
+        eventContainer.innerHTML =
+            `<div class="empty-state">
+                No events yet. Add your first event!
+            </div>`;
+    }
+}
+
+eventForm.addEventListener("submit", function (event) {
+
     event.preventDefault();
+
     const eventData = {
         title: eventTitle.value,
         date: eventDate.value,
         category: eventCategory.value,
         description: eventDescription.value
     };
+
     addEvent(eventData);
-    eventForm.reset();    
+
+    eventForm.reset();
 });
 
-eventContainer.addEventListener("click", (event) => {
-    const card = event.target.closest(".event-card");
 
-    if (event.target.classList.contains("delete-btn")) {
-        card.remove();
-    }
 
-    if (!eventContainer.querySelector(".event-card")) {
-        eventContainer.innerHTML = `<div id="empty-state">No events yet. Add your first event!</div>`;
-    }
+clearAllBtn.addEventListener("click", function () {
+    eventContainer.innerHTML = "";
+    checkEmptyState();
 });
 
-addSampleBtn.addEventListener("click", () => {
-    sampleEvent.forEach(item => addEvent(item));
+
+
+
+addSampleBtn.addEventListener("click", function () {
+    sampleEvents.forEach(function (event) {
+        addEvent(event);
+    });
 });
 
-clearAllBtn.addEventListener("click", () => {
-    eventContainer.innerHTML = `<div id="empty-state">No events yet. Add your first event!</div>`;
+
+
+document.addEventListener("keydown", function () {
+    demoContent.textContent = "You pressed a key! ";
+    demoContent.style.backgroundColor = "lightblue";
 });
